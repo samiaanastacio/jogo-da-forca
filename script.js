@@ -4,10 +4,12 @@ let palavraOriginal = null;
 let palavraAtual = null;
 let erros = 0;
 const chancesMaximas = 6;
+let letrasErradas = [] // Alterado para let para poder ser reatribuído
 
 // ELEMENTOS HTML
 const paragrafoDaDica = document.getElementById('paragrafo-da-dica');
 const palavraEscondida = document.getElementById('palavra-escondida');
+const letrasErradasNaTela = document.getElementById('letras-erradas')
 const botaoAdivinhar = document.getElementById('botao-adivinhar');
 const inputDoJogador = document.getElementById('palpite-do-jogador');
 const imagemForca = document.getElementById('imagem-forca');
@@ -33,10 +35,13 @@ async function iniciarJogo() {
 
     paragrafoDaDica.textContent = objetoSorteado.hint;
     palavraEscondida.textContent = palavraAtual;
-    
+
     erros = 0;
+    letrasErradas = []; // Limpa o array de letras erradas da partida anterior
+    // A linha abaixo estava incorreta e foi removida: letrasErradasNaTela = []
     imagemForca.src = `forca-${erros}.jpg`;
     mensagemFinal.textContent = ''; // Limpa a mensagem final
+    letrasErradasNaTela.textContent = '';
     botaoAdivinhar.disabled = false; // Habilita o botão de adivinhar
     inputDoJogador.disabled = false; // Habilita o input
     botaoReiniciar.hidden = true; // Esconde o botão de reiniciar
@@ -50,13 +55,13 @@ async function iniciarJogo() {
 // =================================================================
 // EVENTO DE CLIQUE DO BOTÃO
 // =================================================================
-botaoAdivinhar.addEventListener('click', function() {
+botaoAdivinhar.addEventListener('click', function () {
   const letraAdivinhada = inputDoJogador.value.toUpperCase();
   inputDoJogador.value = '';
 
   if (palavraOriginal.includes(letraAdivinhada)) {
     console.log('Parabéns! Você acertou a letra!');
-    
+
     let novaPalavraAtualizada = '';
     for (let i = 0; i < palavraOriginal.length; i++) {
       if (palavraOriginal[i] === letraAdivinhada) {
@@ -67,7 +72,7 @@ botaoAdivinhar.addEventListener('click', function() {
     }
     palavraAtual = novaPalavraAtualizada;
     palavraEscondida.textContent = palavraAtual;
-    
+
     if (palavraAtual === palavraOriginal) {
       mensagemFinal.textContent = 'VOCÊ VENCEU! Parabéns!';
       console.log('VOCÊ VENCEU!');
@@ -77,9 +82,12 @@ botaoAdivinhar.addEventListener('click', function() {
     }
 
   } else {
+
+    letrasErradas.push(letraAdivinhada)
+    letrasErradasNaTela.textContent = letrasErradas.join(', ')
     erros++;
     console.log(`Que pena, a letra não está na palavra. Erros: ${erros}/${chancesMaximas}`);
-    
+
     imagemForca.src = `forca-${erros}.jpg`;
 
     if (erros >= chancesMaximas) {
@@ -88,14 +96,17 @@ botaoAdivinhar.addEventListener('click', function() {
       botaoAdivinhar.disabled = true; // Desabilita o botão de adivinhar
       inputDoJogador.disabled = true; // Desabilita o input
       botaoReiniciar.hidden = false; // Mostra o botão de reiniciar
+
     }
+
   }
+
 });
 
 // =================================================================
 // FUNÇÃO QUE REINICIA O JOGO
 // =================================================================
-botaoReiniciar.addEventListener('click', function() {
+botaoReiniciar.addEventListener('click', function () {
   iniciarJogo(); // Basta chamar a função de inicialização novamente!
 });
 

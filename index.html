@@ -10,18 +10,28 @@
 
 <body>
     <h1>Jogo da Forca</h1>
+    <div id="container"> 
+        <div>
+            <img id="imagem-forca" src="forca-0.jpg" alt="Desenho da forca">
+            
+        </div>
+    
+        <div>
+            <h3>Dica:</h3>
+            <p id="paragrafo-da-dica"></p>
+            <h3>Adivinhe a palavra:</h3>
+            <p id="palavra-escondida"></p>
+            <h3>Letras Erradas</h3>
+            <p id="letras-erradas"> </p>
+            <p id="mensagem-final"></p>
+            <button id="botao-reiniciar" hidden>Jogar Novamente</button>
 
-    <img id="imagem-forca" src="forca-0.jpg" alt="Desenho da forca">
-    <h3>Dica:</h3>
-    <p id="paragrafo-da-dica"></p>
-
-    <h3>Adivinhe a palavra:</h3>
-    <p id="palavra-escondida"></p>
-    <p id="mensagem-final"></p>
-    <button id="botao-reiniciar" hidden>Jogar Novamente</button>
-
-    <input type="text" id="palpite-do-jogador" maxlength="1">
-    <button id="botao-adivinhar">Adivinhar</button>
+            <input type="text" id="palpite-do-jogador" maxlength="1">
+            <button id="botao-adivinhar">Adivinhar</button>
+    
+        </div>
+    </div>
+    
 
     <script src="/script.js"></script>
 </body>
